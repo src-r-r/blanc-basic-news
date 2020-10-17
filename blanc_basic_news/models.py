@@ -2,10 +2,10 @@
 
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 from django.utils import timezone
-from django.utils.encoding import python_2_unicode_compatible
+from six import python_2_unicode_compatible
 
 from blanc_basic_assets.fields import AssetForeignKey
 
@@ -22,21 +22,18 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('blanc_basic_news:post-list-category', (), {
-            'slug': self.slug,
-        })
+        return reverse('blanc_basic_news:post-list-category', args=[self.slug])
 
 
 @python_2_unicode_compatible
 class Post(models.Model):
     title = models.CharField(max_length=100, db_index=True)
-    category = models.ForeignKey(Category)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     slug = models.SlugField(max_length=100, unique_for_date='date')
     date = models.DateTimeField(default=timezone.now, db_index=True)
     date_url = models.DateField(db_index=True, editable=False)
-    image = AssetForeignKey('assets.Image', null=True, blank=True)
+    image = AssetForeignKey('assets.Image', null=True, blank=True, on_delete=models.CASCADE)
     teaser = models.TextField(blank=True)
     content = models.TextField()
     published = models.BooleanField(

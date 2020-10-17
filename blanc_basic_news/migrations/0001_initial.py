@@ -37,8 +37,8 @@ class Migration(migrations.Migration):
                 ('teaser', models.TextField(blank=True)),
                 ('content', models.TextField()),
                 ('published', models.BooleanField(help_text='Post will be hidden unless this option is selected', default=True, db_index=True)),
-                ('category', models.ForeignKey(to='news.Category')),
-                ('image', blanc_basic_assets.fields.AssetForeignKey(to='assets.Image', null=True, blank=True)),
+                ('category', models.ForeignKey(to='news.Category', on_delete=models.CASCADE)),
+                ('image', blanc_basic_assets.fields.AssetForeignKey(to='assets.Image', null=True, blank=True, on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ('-date',),

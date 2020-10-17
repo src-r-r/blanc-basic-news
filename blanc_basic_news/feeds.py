@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.contrib.syndication.views import Feed
-from django.core.urlresolvers import reverse_lazy
+# from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 
